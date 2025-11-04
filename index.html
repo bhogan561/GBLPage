@@ -324,40 +324,42 @@
                     </h2>
 
                     <div class="flex justify-center">
-                        <form aria-live="polite" class="w-full max-w-2xl">
+                        <form id="contactForm" aria-live="polite" class="w-full max-w-2xl">
                             <h4 class="text-gray-300 text-xl font-bold leading-normal mb-6 text-center">Drop us a line!</h4>
 
                             <div class="mb-6">
                                 <div class="input-float-label-container">
-                                    <input type="text" id="nameInput" value="" class="input-float-label" oninput="this.setAttribute('value', this.value);">
+                                    <input type="text" id="nameInput" name="name" value="" class="input-float-label" oninput="this.setAttribute('value', this.value);">
                                     <label for="nameInput" class="input-float-label-label">Name</label>
                                 </div>
                             </div>
 
                             <div class="mb-6">
                                 <div class="input-float-label-container">
-                                    <input type="email" id="emailInput" value="" class="input-float-label" required oninput="this.setAttribute('value', this.value);">
+                                    <input type="email" id="emailInput" name="email" value="" class="input-float-label" required oninput="this.setAttribute('value', this.value);">
                                     <label for="emailInput" class="input-float-label-label">Email*</label>
                                 </div>
                             </div>
 
                             <div class="mb-6">
-                                <textarea id="messageInput" rows="6" placeholder="Message" class="input-float-label resize-y pt-4 pb-4" oninput="this.setAttribute('value', this.value);"></textarea>
+                                <textarea id="messageInput" name="message" rows="6" placeholder="Message" class="input-float-label resize-y pt-4 pb-4" oninput="this.setAttribute('value', this.value);"></textarea>
                             </div>
 
                             <div class="mb-6 flex justify-center">
                                 <label class="custom-checkbox-container">
-                                    <input type="checkbox" class="custom-checkbox-input">
+                                    <input type="checkbox" name="subscribe" class="custom-checkbox-input">
                                     <div class="custom-checkbox-box"></div>
                                     <p class="text-gray-500 text-sm leading-normal ml-2">Sign up for our email list for updates, promotions, and more.</p>
                                 </label>
                             </div>
 
                             <div class="mb-6 flex justify-center">
-                                <button type="submit" class="bg-white text-black font-bold py-3 px-8 rounded-md min-h-[56px] w-full md:w-auto hover:bg-gray-300 transition-colors duration-200 uppercase tracking-wider">
+                                <button id="contactFormSubmit" type="submit" class="bg-white text-black font-bold py-3 px-8 rounded-md min-h-[56px] w-full md:w-auto hover:bg-gray-300 transition-colors duration-200 uppercase tracking-wider">
                                     Send
                                 </button>
                             </div>
+
+                            <p id="contactFormStatus" class="text-center text-sm"></p>
 
                             <div class="py-4 text-center">
                                 <p class="text-gray-500 text-xs leading-normal">
@@ -400,6 +402,12 @@
             const acceptCookiesButton = document.getElementById('acceptCookies');
             const pageLinks = document.querySelectorAll('[data-page-target]');
             const pageSections = document.querySelectorAll('.page-content-section');
+            const contactForm = document.getElementById('contactForm');
+            const contactFormStatus = document.getElementById('contactFormStatus');
+            const contactFormSubmit = document.getElementById('contactFormSubmit');
+
+            // TODO: Replace with your deployed Google Apps Script URL
+            const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/YOUR-DEPLOYMENT-ID/exec';
 
             // Function to show a specific page and hide others
             const showPage = (pageId) => {
@@ -441,6 +449,63 @@
             document.querySelectorAll('.input-float-label').forEach(input => {
                 input.dispatchEvent(new Event('input')); // Trigger for initial state
             });
+
+            if (contactForm) {
+                contactForm.addEventListener('submit', async (event) => {
+                    event.preventDefault();
+
+                    if (!APPS_SCRIPT_WEBAPP_URL || APPS_SCRIPT_WEBAPP_URL.includes('YOUR-DEPLOYMENT-ID')) {
+                        contactFormStatus.textContent = 'Form submission is not configured yet. Please update the Apps Script URL.';
+                        contactFormStatus.className = 'text-center text-sm text-red-400';
+                        return;
+                    }
+
+                    contactFormStatus.textContent = 'Sending…';
+                    contactFormStatus.className = 'text-center text-sm text-gray-400';
+                    contactFormSubmit.disabled = true;
+                    contactFormSubmit.classList.add('opacity-60', 'cursor-not-allowed');
+
+                    const formData = new FormData(contactForm);
+                    const payload = {
+                        name: formData.get('name')?.trim() || '',
+                        email: formData.get('email')?.trim() || '',
+                        message: formData.get('message')?.trim() || '',
+                        subscribe: formData.get('subscribe') === 'on'
+                    };
+
+                    try {
+                        const response = await fetch(APPS_SCRIPT_WEBAPP_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(payload)
+                        });
+
+                        if (!response.ok) {
+                            throw new Error(`Request failed with status ${response.status}`);
+                        }
+
+                        const result = await response.json().catch(() => ({}));
+                        const message = result.message || 'Thank you! Your message has been sent.';
+
+                        contactFormStatus.textContent = message;
+                        contactFormStatus.className = 'text-center text-sm text-green-400';
+                        contactForm.reset();
+                        document.querySelectorAll('.input-float-label').forEach(input => {
+                            input.setAttribute('value', '');
+                            input.dispatchEvent(new Event('input'));
+                        });
+                    } catch (error) {
+                        console.error('Error submitting contact form:', error);
+                        contactFormStatus.textContent = 'Something went wrong. Please try again later or reach out directly.';
+                        contactFormStatus.className = 'text-center text-sm text-red-400';
+                    } finally {
+                        contactFormSubmit.disabled = false;
+                        contactFormSubmit.classList.remove('opacity-60', 'cursor-not-allowed');
+                    }
+                });
+            }
         });
     </script>
 </body>
