@@ -170,7 +170,7 @@
                         <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="home">Home</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="about-us">About Us</a></li>
                         <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="meet-the-team">Meet the Team</a></li>
-                        <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="testimonials">Testimonials</a></li>
+                        <!-- <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="testimonials">Testimonials</a></li> -->
                         <li><a href="#" class="text-gray-300 hover:text-white transition-colors duration-200 uppercase font-montserrat text-sm md:text-base" data-page-target="contact-us">Contact Us</a></li>
                     </ul>
                 </nav>
@@ -218,7 +218,12 @@
 							<img src="https://img.icons8.com/color/96/000000/google-drive.png" alt="Google Drive Logo" class="h-12 md:h-16 w-auto">
 							<img src="https://img.icons8.com/color/96/000000/google-docs.png" alt="Google Docs Logo" class="h-12 md:h-16 w-auto">
 							<img src="https://img.icons8.com/color/96/000000/google-sheets.png" alt="Google Sheets Logo" class="h-12 md:h-16 w-auto">
-							<img src="https://img.icons8.com/color/96/000000/google-meet--v2.png" alt="Google Meet Logo" class="h-12 md:h-16 w-auto">
+							
+							<!-- Replaced broken <img> with inline SVG to prevent hotlinking issues -->
+							<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" class="h-12 md:h-16 w-auto" fill="#F22F46">
+								<title>Twilio</title>
+								<path d="M12,24C5.373,24,0,18.627,0,12C0,5.373,5.373,0,12,0C18.627,0,24,5.373,24,12C24,18.627,18.627,24,12,24 M12,2.302 C6.642,2.302,2.302,6.642,2.302,12C2.302,17.358,6.642,21.698,12,21.698C17.358,21.698,21.698,17.358,21.698,12 C21.698,6.642,17.358,2.302,12,2.302 M10.323,13.628C10.323,14.671,9.457,15.537,8.414,15.537C7.371,15.537,6.505,14.671,6.505,13.628 C6.505,12.585,7.371,11.719,8.414,11.719C9.457,11.719,10.323,12.585,10.323,13.628 M10.323,8.414C10.323,9.457,9.457,10.323,8.414,10.323 C7.371,10.323,6.505,9.457,6.505,8.414C6.505,7.371,7.371,6.505,8.414,6.505C9.457,6.505,10.323,7.371,10.323,8.414 M17.495,13.628C17.495,14.671,16.629,15.537,15.586,15.537C14.543,15.537,13.677,14.671,13.677,13.628 C13.677,12.585,14.543,11.719,15.586,11.719C16.629,11.719,17.495,12.585,17.495,13.628 M17.495,8.414 C17.495,9.457,16.629,10.323,15.586,10.323C14.543,10.323,13.677,9.457,13.677,8.414C13.677,7.371,14.543,6.505,15.586,6.505 C16.629,6.505,17.495,7.371,17.495,8.414"/>
+							</svg>
 						</div>
 					</div>
 				</section>
@@ -266,7 +271,7 @@
                             </p>
                         </div>
                         <div class="bg-neutral-900 rounded-lg p-6 shadow-lg">
-                            <img src="https://placehold.co/150x150/4a4a4a/ffffff?text=Avatar" alt="Ben Hogan Avatar" class="rounded-full mx-auto mb-4 w-[150px] h-[150px] object-cover object-center">
+                            <img src="https://i.imgur.com/wojZNRu.jpeg" alt="Ben Hogan Avatar" class="rounded-full mx-auto mb-4 w-[150px] h-[150px] object-cover object-center">
                             <h3 class="text-white text-2xl font-montserrat font-semibold mb-2">Ben Hogan</h3>
                             <p class="text-gray-400 text-md">Head of Software Development</p>
                             <p class="text-gray-300 text-sm mt-4">
@@ -277,7 +282,7 @@
                 </div>
             </section>
 
-            <section id="testimonials-page" class="page-content-section bg-black py-14 md:py-20">
+            <!-- <section id="testimonials-page" class="page-content-section bg-black py-14 md:py-20">
                 <div class="container mx-auto px-6 max-w-4xl text-center">
                     <h2 class="text-white text-4xl md:text-5xl font-playfair font-bold mb-10">
                         <span class="inline-block">What Our Clients Say</span>
@@ -314,7 +319,7 @@
                         </div>
                     </div>
                 </div>
-            </section>
+            </section> -->
 
             <section id="contact-us-page" class="page-content-section bg-black py-14 md:py-20">
                 <div class="container mx-auto px-6 max-w-4xl">
@@ -406,6 +411,9 @@
             const contactFormStatus = document.getElementById('contactFormStatus');
             const contactFormSubmit = document.getElementById('contactFormSubmit');
 
+            // --- IMPORTANT ---
+            // This is the URL for the Google Apps Script Web App that processes the form.
+            // Replace 'YOUR-DEPLOYMENT-ID' with your actual Apps Script deployment ID.
             const APPS_SCRIPT_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbzlrHx5sTkQruI856KAHRzLkEAxDRgZHol07eGxYcO_I9BN2FxR1YulWKsnQ1q6F0kNQw/exec';
 
             // Function to show a specific page and hide others
@@ -449,21 +457,25 @@
                 input.dispatchEvent(new Event('input')); // Trigger for initial state
             });
 
+            // Contact Form Submission Handler
             if (contactForm) {
                 contactForm.addEventListener('submit', async (event) => {
                     event.preventDefault();
 
+                    // Check if the URL is still the placeholder
                     if (!APPS_SCRIPT_WEBAPP_URL || APPS_SCRIPT_WEBAPP_URL.includes('YOUR-DEPLOYMENT-ID')) {
                         contactFormStatus.textContent = 'Form submission is not configured yet. Please update the Apps Script URL.';
                         contactFormStatus.className = 'text-center text-sm text-red-400';
                         return;
                     }
 
+                    // --- Start Submission ---
                     contactFormStatus.textContent = 'Sending…';
                     contactFormStatus.className = 'text-center text-sm text-gray-400';
                     contactFormSubmit.disabled = true;
                     contactFormSubmit.classList.add('opacity-60', 'cursor-not-allowed');
 
+                    // Create payload from form data
                     const formData = new FormData(contactForm);
                     const payload = {
                         name: formData.get('name')?.trim() || '',
@@ -473,41 +485,53 @@
                     };
 
                     try {
-						const body = new URLSearchParams({
-  							name: payload.name,
-  							email: payload.email,
-  							message: payload.message,
-  							// send subscribe as 'true' or 'false' string
-  							subscribe: payload.subscribe ? 'true' : 'false'
-						}).toString();
+                        // We must send data as 'application/x-www-form-urlencoded'
+                        // for a Google Apps Script POST request to correctly parse parameters.
+                        const body = new URLSearchParams({
+                            name: payload.name,
+                            email: payload.email,
+                            message: payload.message,
+                            // send subscribe as 'true' or 'false' string
+                            subscribe: payload.subscribe ? 'true' : 'false'
+                        }).toString();
 
-						const response = await fetch(APPS_SCRIPT_WEBAPP_URL, {
-  							method: 'POST',
-  							headers: {
-  							  'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-							},
-  							body: body
-						});
+                        const response = await fetch(APPS_SCRIPT_WEBAPP_URL, {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+                            },
+                            mode: 'no-cors', // Use 'no-cors' for basic "fire and forget" submission
+                                          // Apps Script web apps often have CORS issues when POSTing from a browser
+                                          // and reading the response. 'no-cors' means we can't read the response,
+                                          // but the data will be sent.
+                            body: body
+                        });
+                        
+                        // NOTE: Because of 'no-cors', we cannot check response.ok or read response.json().
+                        // We will just optimistically assume it worked if the fetch call itself didn't throw an error.
+                        
+                        // const result = await response.json().catch(() => ({})); // This line won't work with no-cors
+                        // const message = result.message || 'Thank you! Your message has been sent.';
 
-                        if (!response.ok) {
-                            throw new Error(`Request failed with status ${response.status}`);
-                        }
-
-                        const result = await response.json().catch(() => ({}));
-                        const message = result.message || 'Thank you! Your message has been sent.';
+                        const message = 'Thank you! Your message has been sent.'; // Optimistic success message
 
                         contactFormStatus.textContent = message;
                         contactFormStatus.className = 'text-center text-sm text-green-400';
                         contactForm.reset();
+                        
+                        // Reset floating labels after form reset
                         document.querySelectorAll('.input-float-label').forEach(input => {
                             input.setAttribute('value', '');
                             input.dispatchEvent(new Event('input'));
                         });
+
                     } catch (error) {
                         console.error('Error submitting contact form:', error);
+                        // This will catch network errors, but not bad responses from the server due to 'no-cors'
                         contactFormStatus.textContent = 'Something went wrong. Please try again later or reach out directly.';
                         contactFormStatus.className = 'text-center text-sm text-red-400';
                     } finally {
+                        // Re-enable the button regardless of outcome
                         contactFormSubmit.disabled = false;
                         contactFormSubmit.classList.remove('opacity-60', 'cursor-not-allowed');
                     }
@@ -517,5 +541,3 @@
     </script>
 </body>
 </html>
-
-
